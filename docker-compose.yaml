@@ -1,0 +1,35 @@
+version: '3'
+
+services:
+  web-app:
+    restart: on-failure
+    container_name: web-app
+    build:
+      context: .
+    ports:
+    - "8080:8080"
+  
+  prometheus:
+    image: prom/prometheus
+    container_name: prometheus
+    network_mode: "host"
+    volumes:
+      - /home/student/LearnMetrics/config/prometheus.yaml:/etc/prometheus/prometheus.yaml
+    restart: on-failure
+    depends_on:
+      - "web-app"
+      
+  grafana:
+    image: grafana/grafana
+    container_name: grafana
+    network_mode: "host"
+    restart: on-failure
+    depends_on:
+      - "prometheus"
+  
+  node-exporter:
+    build: ./node_exporter/
+    container_name: node-exporter
+    ports:
+     - "9100:9100"
+    
