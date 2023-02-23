@@ -14,7 +14,7 @@ services:
     container_name: prometheus
     network_mode: "host"
     volumes:
-      - /home/student/LearnMetrics/config/prometheus.yaml:/etc/prometheus/prometheus.yaml
+      - /h/u/config/prometheus.yaml:/etc/prometheus/prometheus.yaml
     restart: on-failure
     depends_on:
       - "web-app"
